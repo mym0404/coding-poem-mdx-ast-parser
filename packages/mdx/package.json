@@ -1,6 +1,6 @@
 {
-  "name": "@mdx-js/mdx",
-  "version": "3.0.0",
+  "name": "@coding-poem/mdx-ast-parser",
+  "version": "0.1.0",
   "description": "MDX compiler",
   "license": "MIT",
   "keywords": [
@@ -69,7 +69,8 @@
   "scripts": {
     "test": "npm run test-coverage",
     "test-api": "node --conditions development --enable-source-maps test/index.js",
-    "test-coverage": "c8 --100 --reporter lcov npm run test-api"
+    "test-coverage": "c8 --100 --reporter lcov npm run test-api",
+    "release": "git commit --all --message 1.2.3 && git tag 1.2.3 && git push && git push --tags"
   },
   "xo": {
     "overrides": [

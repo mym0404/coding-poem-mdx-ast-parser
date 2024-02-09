@@ -151,7 +151,7 @@ const removedOptions = [
 let warned = false
 
 /**
- * Create a processor to compile markdown or MDX to JavaScript.
+ * Create a processor to compile markdown or MDX to AST.
  *
  * > **Note**: `format: 'detect'` is not allowed in `ProcessorOptions`.
  *
@@ -160,7 +160,7 @@ let warned = false
  * @return {Processor}
  *   Processor.
  */
-export function createProcessor(options) {
+export function createAstParseProcessor(options) {
   const settings = options || {}
   let index = -1
 
@@ -169,8 +169,8 @@ export function createProcessor(options) {
     if (key in settings) {
       unreachable(
         'Unexpected removed option `' +
-          key +
-          '`; see <https://mdxjs.com/migrating/v2/> on how to migrate'
+        key +
+        '`; see <https://mdxjs.com/migrating/v2/> on how to migrate'
       )
     }
   }
@@ -201,6 +201,28 @@ export function createProcessor(options) {
   if (settings.format !== 'md') {
     pipeline.use(remarkMdx)
   }
+
+  pipeline
+  .use(remarkMarkAndUnravel)
+  .use(settings.remarkPlugins || [])
+
+  // @ts-expect-error: we added plugins with if-checks, which TS doesn’t get.
+  return pipeline
+}
+
+
+/**
+ * Create a processor to compile markdown or MDX to JavaScript.
+ *
+ * > **Note**: `format: 'detect'` is not allowed in `ProcessorOptions`.
+ *
+ * @param {Readonly<ProcessorOptions> | null | undefined} [options]
+ *   Configuration (optional).
+ * @return {Processor}
+ *   Processor.
+ */
+export function createProcessor(options) {
+  const pipeline = createAstParseProcessor(options);
 
   const remarkRehypeOptions = settings.remarkRehypeOptions || {}
 
