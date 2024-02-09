@@ -1,4 +1,5 @@
 /**
+ * @typedef {import("unist").Node} Node
  * @typedef {import('vfile').VFile} VFile
  * @typedef {import('vfile').Compatible} Compatible
  * @typedef {import('./core.js').ProcessorOptions} ProcessorOptions

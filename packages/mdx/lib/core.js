@@ -222,6 +222,7 @@ export function createAstParseProcessor(options) {
  *   Processor.
  */
 export function createProcessor(options) {
+  const settings = options || {}
   const pipeline = createAstParseProcessor(options);
 
   const remarkRehypeOptions = settings.remarkRehypeOptions || {}
@@ -251,6 +252,5 @@ export function createProcessor(options) {
 
   pipeline.use(recmaStringify, settings).use(settings.recmaPlugins || [])
 
-  // @ts-expect-error: we added plugins with if-checks, which TS doesn’t get.
   return pipeline
 }
