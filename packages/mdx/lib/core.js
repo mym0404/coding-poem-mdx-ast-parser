@@ -228,8 +228,6 @@ export function createProcessor(options) {
   const remarkRehypeOptions = settings.remarkRehypeOptions || {}
 
   pipeline
-    .use(remarkMarkAndUnravel)
-    .use(settings.remarkPlugins || [])
     .use(remarkRehype, {
       ...remarkRehypeOptions,
       allowDangerousHtml: true,
